@@ -32,7 +32,6 @@ Also, you are able to set up composer in your desired IDE like PhpStorm.
 Alternatively you can create an alias in your `.bashrc` or `.zshrc`:
 
 ```bash
-
 composer () {
     tty=
     tty -s && tty=--tty
@@ -46,7 +45,4 @@ composer () {
         --volume $(pwd):/app \
         hermsi/alpine-composer:7.1 $@
 }
-
-composer $@
-
 ```
