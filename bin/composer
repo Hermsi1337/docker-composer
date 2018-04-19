@@ -11,7 +11,7 @@ composer () {
         --volume /etc/passwd:/etc/passwd:ro \
         --volume /etc/group:/etc/group:ro \
         --volume $(pwd):/app \
-        hermsi/alpine-composer:7.1 "$@"
+        hermsi/alpine-composer:7.1 $@
 }
 
 composer $@
