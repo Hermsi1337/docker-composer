@@ -47,7 +47,7 @@ If you want to do it like me, do it like that:
                 --volume /etc/passwd:/etc/passwd:ro \
                 --volume /etc/group:/etc/group:ro \
                 --volume $(pwd):/app \
-                hermsi/alpine-composer:php7.1 "$@"
+                hermsi/alpine-composer "$@"
         }
 
         composer $@
@@ -75,7 +75,7 @@ composer () {
         --volume /etc/passwd:/etc/passwd:ro \
         --volume /etc/group:/etc/group:ro \
         --volume $(pwd):/app \
-        hermsi/alpine-composer:php7.1 $@
+        hermsi/alpine-composer $@
 }
 ```
 
