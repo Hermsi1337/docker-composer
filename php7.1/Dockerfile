@@ -1,4 +1,4 @@
-FROM        hermsi/alpine-fpm-php:7.2
+FROM        hermsi/alpine-fpm-php:7.1
 
 LABEL       maintainer="https://github.com/hermsi1337"
 
@@ -24,10 +24,10 @@ RUN         curl -s -f -L -o /tmp/installer.php ${COMPOSER_INSTALLER_URL} \
             && composer --ansi --version --no-interaction \
             && rm -rf /tmp/* /tmp/.htaccess
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY        docker-entrypoint.sh /docker-entrypoint.sh
 
-WORKDIR /app
+WORKDIR     /app
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT  ["/docker-entrypoint.sh"]
 
-CMD ["composer"]
+CMD         ["composer"]

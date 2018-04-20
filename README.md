@@ -5,9 +5,18 @@ This is a Dockerfile/image to build a container for [composer](https://getcompos
 Most of the regular needed modules (apcu, opcache, php-redis, etc.) are built in and configured like suggested on [php.net](https://secure.php.net/).<br>
 
 ## Features
-* intl, zip, soap
-* mysqli, pdo, pdo_mysql, pdo_pgsql
-* mcrypt, gd, iconv
+* intl
+* zip
+* soap
+* mysqli
+* pdo
+* pdo_mysql
+* pdo_pgsql
+* mcrypt
+* gd
+* iconv
+* xsl
+* bcmath
 * gmp
 * php-redis
 * memcached
@@ -15,6 +24,7 @@ Most of the regular needed modules (apcu, opcache, php-redis, etc.) are built in
 * apcu ([configuration reference](https://secure.php.net/manual/en/apcu.configuration.php))
 * imagick
 * ssh2
+* mcrypt (< php7.2)
 
 ## Basic Usage
 This Image is intended to be used as an replacement for composer.
