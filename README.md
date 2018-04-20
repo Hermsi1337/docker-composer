@@ -47,7 +47,7 @@ If you want to do it like me, do it like that:
                 --volume /etc/passwd:/etc/passwd:ro \
                 --volume /etc/group:/etc/group:ro \
                 --volume $(pwd):/app \
-                hermsi/alpine-composer "$@"
+                hermsi/alpine-composer $@
         }
 
         composer $@
