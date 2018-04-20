@@ -31,9 +31,31 @@ This Image is intended to be used as an replacement for composer.
 
 I recommend to create a file named `composer` somwhere in your `$PATH`.
 If you want to do it like me, do it like that:
-   1. `$ wget https://raw.githubusercontent.com/Hermsi1337/docker-composer/master/bin/composer -O /usr/local/bin/composer`
-   2. `$ chmod +x /usr/local/bin/composer`
-   3. `$ sudo chmod u+s /usr/local/bin/composer`
+   1. Create a file in `/usr/local/bin` which provides the `composer`-command with the following content:
+        `$ vim /usr/local/bin/composer`
+        ```bash
+        #!/bin/bash
+
+        composer () {
+            tty=
+            tty -s && tty=--tty
+            docker run \
+                $tty \
+                --interactive \
+                --rm \
+                --user $(id -u):$(id -g) \
+                --volume /etc/passwd:/etc/passwd:ro \
+                --volume /etc/group:/etc/group:ro \
+                --volume $(pwd):/app \
+                hermsi/alpine-composer:php7.1 "$@"
+        }
+
+        composer $@
+        ```
+   2. Make that file executable:
+        `$ chmod +x /usr/local/bin/composer`
+   3. Set `UID` for executing the file as `root` without password-prompt. As you know, without `root` no `docker run`:
+        `$ sudo chmod u+s /usr/local/bin/composer`
 
 After that you should be able to use `composer`-command directly in your shell.
 Also, you are able to set up composer in your desired IDE like PhpStorm.
