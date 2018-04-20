@@ -75,6 +75,12 @@ composer () {
         --volume /etc/passwd:/etc/passwd:ro \
         --volume /etc/group:/etc/group:ro \
         --volume $(pwd):/app \
-        hermsi/alpine-composer:7.1 $@
+        hermsi/alpine-composer:php7.1 $@
 }
 ```
+
+## Versions and Tags
+This image is currently available with PHP 7.1 and PHP 7.2.
+Depending on your application you may want to change the image to use in your `composer-function`
+* `hermsi/alpine-composer:php7.2`, `hermsi/alpine-composer:latest`
+* `hermsi/alpine-composer:php7.1`
