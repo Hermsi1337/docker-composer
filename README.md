@@ -29,10 +29,10 @@ Most of the regular needed modules (apcu, opcache, php-redis, etc.) are built in
 ## Basic Usage
 This Image is intended to be used as an replacement for composer.
 
-I recommend to create a file named `composer` somwhere in your `$PATH`.
+I recommend to create a file named `composer-docker` somwhere in your `$PATH`.
 If you want to do it like me, do it like that:
    1. Create a file in `/usr/local/bin` which provides the `composer`-command with the following content:
-        `$ vim /usr/local/bin/composer`
+        `$ vim /usr/local/bin/composer-docker`
         ```bash
         #!/bin/bash
 
@@ -43,41 +43,19 @@ If you want to do it like me, do it like that:
                 $tty \
                 --interactive \
                 --rm \
-                --user $(id -u):$(id -g) \
+                --user "$(id -u)":"$(id -g)" \
                 --volume /etc/passwd:/etc/passwd:ro \
                 --volume /etc/group:/etc/group:ro \
-                --volume $(pwd):/app \
-                hermsi/alpine-composer $@
+                --volume "$(pwd)":/app \
+                hermsi/alpine-composer "$@"
         }
 
-        composer $@
+        composer "$@"
         ```
-   2. Make that file executable:
-        `$ chmod +x /usr/local/bin/composer`
-   3. Set `UID` for executing the file as `root` without password-prompt. As you know, without `root` no `docker run`:
-        `$ sudo chmod u+s /usr/local/bin/composer`
-
+   2. Create an alias in your `.bashrc` or `.zshrc`:
+        `$ alias "composer"="sudo bash /usr/local/bin/composer-docker"`
+ 
 After that you should be able to use `composer`-command directly in your shell.
-Also, you are able to set up composer in your desired IDE like PhpStorm.
-
-
-Alternatively you can create an alias in your `.bashrc` or `.zshrc`:
-
-```bash
-composer () {
-    tty=
-    tty -s && tty=--tty
-    docker run \
-        $tty \
-        --interactive \
-        --rm \
-        --user $(id -u):$(id -g) \
-        --volume /etc/passwd:/etc/passwd:ro \
-        --volume /etc/group:/etc/group:ro \
-        --volume $(pwd):/app \
-        hermsi/alpine-composer $@
-}
-```
 
 ## Versions and Tags
 This image is currently available with PHP 7.1 and PHP 7.2.
