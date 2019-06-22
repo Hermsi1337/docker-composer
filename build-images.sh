@@ -66,13 +66,13 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
         --tag "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}" \
-        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}php${FULL_PHP_VERSION}" \
-        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}php${PHP_MINOR_RELEASE_TAG}" \
-        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}php${PHP_MAJOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}" \
-        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}php${FULL_PHP_VERSION}" \
-        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}php${PHP_MINOR_RELEASE_TAG}" \
-        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}php${PHP_MAJOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --file "${TRAVIS_BUILD_DIR}/Dockerfile" \
         "${TRAVIS_BUILD_DIR}" 1>/dev/null
 
