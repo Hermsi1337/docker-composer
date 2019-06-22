@@ -11,7 +11,9 @@ ENV         COMPOSER_HOME=/tmp \
 
 COPY        --from=composer /docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN         wget -O /tmp/installer.php ${COMPOSER_INSTALLER_URL} \
+RUN         apk add --no-cache bash \
+            && \
+            wget -O /tmp/installer.php ${COMPOSER_INSTALLER_URL} \
             && \
             php -r " \
                 \$signature = '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5'; \
@@ -26,7 +28,7 @@ RUN         wget -O /tmp/installer.php ${COMPOSER_INSTALLER_URL} \
             && \
             composer --ansi --version --no-interaction \
             && \
-            rm -rf /tmp/* /tmp/.htaccess \
+            rm -rf /tmp/* /var/cache/apk/* \
             && \
             find /tmp -type d -exec chmod -v 1777 {} +
 
