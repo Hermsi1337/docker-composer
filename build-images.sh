@@ -7,6 +7,8 @@ STABLE="1.8"
 README_URL="https://getcomposer.org/download/"
 
 PHP_VERSIONS=("7.3" "7.2" "7.1")
+PHP_STABLE=("7.3")
+PHP_LATEST=("7.3")
 
 DIRECTORIES=($(find "${TRAVIS_BUILD_DIR}" -maxdepth 1 -mindepth 1 -type d -name "php*" -o -name "conf.d" | sed -e 's#.*\/\(\)#\1#' | sort))
 
@@ -80,14 +82,14 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
         "${TRAVIS_BUILD_DIR}" 1>/dev/null
 
     if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
-        if [[ "${MINOR_RELEASE_TAG}" == "${STABLE}" ]]; then
+        if [[ "${MINOR_RELEASE_TAG}" == "${STABLE}" ]] && [[ "${PHP_MINOR_RELEASE_TAG}" == "${PHP_STABLE}" ]]; then
             docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}"
             docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${FULL_PHP_VERSION}"
             docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
             docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
         fi
 
-        if [[ "${MINOR_RELEASE_TAG}" == "${LATEST}" ]]; then
+        if [[ "${MINOR_RELEASE_TAG}" == "${LATEST}" ]] && [[ "${PHP_MINOR_RELEASE_TAG}" == "${PHP_LATEST}" ]]; then
             docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}"
             docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${FULL_PHP_VERSION}"
             docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
