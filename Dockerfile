@@ -9,6 +9,8 @@ ENV         COMPOSER_HOME=/tmp \
             COMPOSER_VERSION=${COMPOSER_VERSION} \
             COMPOSER_INSTALLER_URL=https://getcomposer.org/installer
 
+COPY        --from=composer /docker-entrypoint.sh /docker-entrypoint.sh
+
 RUN         wget -O /tmp/installer.php ${COMPOSER_INSTALLER_URL} \
             && \
             php -r " \
@@ -27,8 +29,6 @@ RUN         wget -O /tmp/installer.php ${COMPOSER_INSTALLER_URL} \
             rm -rf /tmp/* /tmp/.htaccess \
             && \
             find /tmp -type d -exec chmod -v 1777 {} +
-
-COPY        --from=composer:${COMPOSER_VERSION} /docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR     /app
 
