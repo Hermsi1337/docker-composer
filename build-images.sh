@@ -37,7 +37,6 @@ unset LATEST_RELEASE_TAG
 LATEST_RELEASE_TAG="latest"
 
 echo "# # # # # # # # # # # # # # # # # #"
-echo "# Building: ${PATCH_RELEASE_TAG}"
 
 for PHP_VERSION in ${PHP_VERSIONS[@]}; do
     FULL_PHP_VERSION="$(w3m -dump "http://php.net/downloads.php" | grep -i "${PHP_VERSION}" | grep -i "changelog" | awk '{print $4}')"
@@ -47,6 +46,10 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
 
     unset PHP_MAJOR_RELEASE_TAG
     PHP_MAJOR_RELEASE_TAG="${FULL_PHP_VERSION%.*}"
+
+    echo "# Building ..."
+    echo "# ... Composer-Version: ${PATCH_RELEASE_TAG}"
+    echo "# ... PHP-Version: ${FULL_PHP_VERSION}"
 
     docker build \
         --quiet \
