@@ -40,6 +40,13 @@ echo "# Building: ${PATCH_RELEASE_TAG}"
 
 for PHP_VERSION in ${PHP_VERSIONS[@]}; do
     FULL_PHP_VERSION="$(w3m -dump "http://php.net/downloads.php" | grep -i "${PHP_VERSION}" | grep -i "changelog" | awk '{print $4}')"
+
+    unset PHP_MINOR_RELEASE_TAG
+    PHP_MINOR_RELEASE_TAG="${FULL_PHP_VERSION%.*}"
+
+    unset PHP_MAJOR_RELEASE_TAG
+    PHP_MAJOR_RELEASE_TAG="${FULL_PHP_VERSION%.*}"
+
     docker build \
         --quiet \
         --no-cache \
@@ -47,18 +54,56 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
         --build-arg PHP_VERSION="${FULL_PHP_VERSION}" \
         --build-arg COMPOSER_VERSION="${PATCH_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${LATEST_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${STABLE_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${MINOR_RELEASE_TAG}php${PHP_MAJOR_RELEASE_TAG}" \
         --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}php${FULL_PHP_VERSION}" \
+        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}php${PHP_MINOR_RELEASE_TAG}" \
+        --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}php${PHP_MAJOR_RELEASE_TAG}" \
         --file "${TRAVIS_BUILD_DIR}/Dockerfile" \
         "${TRAVIS_BUILD_DIR}" 1>/dev/null
 
     if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
-        [[ "${MINOR_RELEASE_TAG}" == "${STABLE}" ]] && docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}"
-        [[ "${MINOR_RELEASE_TAG}" == "${LATEST}" ]] && docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}"
-        [[ "${MINOR_RELEASE_TAG}" == "${STABLE}" ]] && docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}"
+        if [[ "${MINOR_RELEASE_TAG}" == "${STABLE}" ]]; then
+            docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}"
+            docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${FULL_PHP_VERSION}"
+            docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
+            docker_push "${IMAGE_NAME}:${STABLE_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+        fi
+
+        if [[ "${MINOR_RELEASE_TAG}" == "${LATEST}" ]]; then
+            docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}"
+            docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${FULL_PHP_VERSION}"
+            docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
+            docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+        fi
+
+        docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}"
+        docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${FULL_PHP_VERSION}"
+        docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
+        docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+
         docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}"
+        docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${FULL_PHP_VERSION}"
+        docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
+        docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+
         docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}"
+        docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${FULL_PHP_VERSION}"
+        docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
+        docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
     fi
 done
