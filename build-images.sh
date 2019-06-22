@@ -22,6 +22,7 @@ docker_push() {
 
 unset PATCH_RELEASE_TAG
 PATCH_RELEASE_TAG="$(w3m -dump 'https://getcomposer.org/download/' | grep -i 'Latest:' | awk '{print $4}')"
+PATCH_RELEASE_TAG="${PATCH_RELEASE_TAG##v}"
 
 unset MINOR_RELEASE_TAG
 MINOR_RELEASE_TAG="${PATCH_RELEASE_TAG%.*}"
