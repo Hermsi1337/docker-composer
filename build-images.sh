@@ -48,7 +48,7 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
     PHP_MINOR_RELEASE_TAG="${FULL_PHP_VERSION%.*}"
 
     unset PHP_MAJOR_RELEASE_TAG
-    PHP_MAJOR_RELEASE_TAG="${FULL_PHP_VERSION%.*}"
+    PHP_MAJOR_RELEASE_TAG="${FULL_PHP_VERSION%%.*}"
     echo "# # # # # # # # # # # # # #"
     echo "# Building with PHP-Version: ${FULL_PHP_VERSION}"
 
