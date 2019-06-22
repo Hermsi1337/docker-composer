@@ -96,19 +96,22 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
             docker_push "${IMAGE_NAME}:${LATEST_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
         fi
 
+        if [[ "${PHP_MINOR_RELEASE_TAG}" == "${PHP_STABLE}" ]]; then
+            docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+            docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+            docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
+        fi
+
         docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}"
         docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${FULL_PHP_VERSION}"
         docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
-        docker_push "${IMAGE_NAME}:${MAJOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
 
         docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}"
         docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${FULL_PHP_VERSION}"
         docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
-        docker_push "${IMAGE_NAME}:${MINOR_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
 
         docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}"
         docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${FULL_PHP_VERSION}"
         docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MINOR_RELEASE_TAG}"
-        docker_push "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}"
     fi
 done
