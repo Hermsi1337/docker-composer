@@ -1,5 +1,7 @@
 # Make your composer fly on Alpine
 
+[![Build Status](https://travis-ci.com/Hermsi1337/docker-composer.svg?branch=master)](https://travis-ci.com/Hermsi1337/docker-composer)
+
 ## Overview
 This is a Dockerfile/image to build a container for [composer](https://getcomposer.org/) based on PHP 7.1 or 7.2.
 Most of the regular needed modules (apcu, opcache, php-redis, etc.) are built in and configured like suggested on [php.net](https://secure.php.net/).<br>
