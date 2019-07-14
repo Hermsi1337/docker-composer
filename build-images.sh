@@ -6,7 +6,7 @@ LATEST="1.8"
 STABLE="1.8"
 README_URL="https://getcomposer.org/download/"
 
-PHP_VERSIONS=("7.4" "7.3" "7.2" "7.1")
+PHP_VERSIONS=("7.1" "7.2" "7.3" "7.4")
 PHP_STABLE=("7.3")
 PHP_LATEST=("7.4")
 
