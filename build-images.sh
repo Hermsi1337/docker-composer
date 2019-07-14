@@ -6,9 +6,9 @@ LATEST="1.8"
 STABLE="1.8"
 README_URL="https://getcomposer.org/download/"
 
-PHP_VERSIONS=("7.3" "7.2" "7.1")
+PHP_VERSIONS=("7.4" "7.3" "7.2" "7.1")
 PHP_STABLE=("7.3")
-PHP_LATEST=("7.3")
+PHP_LATEST=("7.4")
 
 DIRECTORIES=($(find "${TRAVIS_BUILD_DIR}" -maxdepth 1 -mindepth 1 -type d -name "php*" -o -name "conf.d" | sed -e 's#.*\/\(\)#\1#' | sort))
 
@@ -42,8 +42,9 @@ echo "# # # # # # # # # # # # # # # # # #"
 echo "# Building Composer-Version: ${PATCH_RELEASE_TAG}"
 
 for PHP_VERSION in ${PHP_VERSIONS[@]}; do
-    FULL_PHP_VERSION="$(w3m -dump "http://php.net/downloads.php" | grep -i "${PHP_VERSION}" | grep -i "changelog" | awk '{print $4}')"
-
+    docker pull hermsi/alpine-fpm-php:${PHP_VERSION}
+    FULL_PHP_VERSION="$(docker run --rm --entrypoint /usr/bin/env -t hermsi/alpine-fpm-php:${PHP_VERSION} /bin/sh -c 'echo $PHP_VERSION' | tr -d '\r')"
+        
     unset PHP_MINOR_RELEASE_TAG
     PHP_MINOR_RELEASE_TAG="${FULL_PHP_VERSION%.*}"
 
