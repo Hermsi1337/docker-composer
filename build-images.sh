@@ -10,8 +10,6 @@ PHP_VERSIONS=("7.4" "7.3" "7.2" "7.1")
 PHP_STABLE=("7.3")
 PHP_LATEST=("7.4")
 
-DIRECTORIES=($(find "${TRAVIS_BUILD_DIR}" -maxdepth 1 -mindepth 1 -type d -name "php*" -o -name "conf.d" | sed -e 's#.*\/\(\)#\1#' | sort))
-
 docker_push() {
 
     unset IMAGE
