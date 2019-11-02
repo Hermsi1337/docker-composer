@@ -26,6 +26,11 @@ RUN         apk add --no-cache bash \
             && \
             php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version="${COMPOSER_VERSION}" \
             && \
+            printf "# composer php cli ini settings\n\
+                    date.timezone=UTC\n\
+                    memory_limit=-1\n" \
+            > "${PHP_INI_DIR}/php-cli.ini" \
+            && \
             composer --ansi --version --no-interaction \
             && \
             rm -rf /tmp/* /var/cache/apk/* \
