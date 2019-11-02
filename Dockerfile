@@ -3,11 +3,11 @@ FROM        hermsi/alpine-fpm-php:${PHP_VERSION}
 
 LABEL       maintainer="https://github.com/hermsi1337"
 
-ARG         COMPOSER_VERSION=${COMPOSER_VERSION:-1.8.6}
+ARG         COMPOSER_VERSION=${COMPOSER_VERSION:-1.9.1}
 ENV         COMPOSER_HOME=/tmp \
             COMPOSER_ALLOW_SUPERUSER=1 \
             COMPOSER_VERSION=${COMPOSER_VERSION} \
-            COMPOSER_INSTALLER_URL=https://getcomposer.org/installer
+            COMPOSER_INSTALLER_URL=https://raw.githubusercontent.com/composer/getcomposer.org/cb19f2aa3aeaa2006c0cd69a7ef011eb31463067/web/installer
 
 COPY        --from=composer /docker-entrypoint.sh /docker-entrypoint.sh
 
