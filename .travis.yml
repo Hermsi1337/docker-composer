@@ -16,7 +16,7 @@ addons:
 
 env:
   global:
-    - IMAGE="alpine-composer""
+    - IMAGE="alpine-composer"
     - IMAGE_NAME="${DOCKER_USER}/${IMAGE}"
 
 before_script:
