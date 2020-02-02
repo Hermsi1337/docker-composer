@@ -2,12 +2,12 @@
 
 set -e
 
-LATEST="1.8"
-STABLE="1.8"
+LATEST="1.9"
+STABLE="1.9"
 README_URL="https://getcomposer.org/download/"
 
 PHP_VERSIONS=("7.1" "7.2" "7.3" "7.4")
-PHP_STABLE=("7.3")
+PHP_STABLE=("7.4")
 PHP_LATEST=("7.4")
 
 docker_push() {
@@ -51,6 +51,8 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
     echo "# # # # # # # # # # # # # #"
     echo "# Building with PHP-Version: ${FULL_PHP_VERSION}"
 
+    set -x
+    
     docker build \
         --quiet \
         --no-cache \
@@ -79,6 +81,8 @@ for PHP_VERSION in ${PHP_VERSIONS[@]}; do
         --tag "${IMAGE_NAME}:${PATCH_RELEASE_TAG}-php${PHP_MAJOR_RELEASE_TAG}" \
         --file "${TRAVIS_BUILD_DIR}/Dockerfile" \
         "${TRAVIS_BUILD_DIR}" 1>/dev/null
+        
+    set +x
 
     if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
         if [[ "${MINOR_RELEASE_TAG}" == "${STABLE}" ]] && [[ "${PHP_MINOR_RELEASE_TAG}" == "${PHP_STABLE}" ]]; then
